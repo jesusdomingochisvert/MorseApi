@@ -8,23 +8,12 @@ import java.util.Map;
 
 public class Morse {
 
-    final static String MORSE = "--.--.---.......-.---.-.-.-..-.....--..-....-.-----..-";
+    final static String FILE_PATH="C:\\Users\\jdomingo\\Downloads\\words.txt";
+    final static String EMPTY_STRING="";
 
     static Map<String, String> map = new HashMap<>();
 
     static List<String> words = new ArrayList<>();
-
-    static String out;
-
-    static Morse morse = new Morse();
-
-    public static void main(String[] args) {
-
-        List<String> r = morse.searchWord(MORSE, out);
-
-        morse.filterResultWords(r);
-
-    }
 
     public Morse() {
 
@@ -59,49 +48,30 @@ public class Morse {
 
     }
 
-    public List<String> filterResultWords(List<String> result) {
-
-        for (int i = 0; i < result.size(); i++) {
-
-            if (result.get(i).length() <= 30) {
-
-                System.out.println(result.get(i));
-
-            }
-
-        }
-
-        return result;
-
-    }
 
     public List<String> readFile() {
 
-        File f = null;
+        File fileToRead = null;
 
-        FileReader fr = null;
+        FileReader fileReader = null;
 
-        BufferedReader br = null;
+        BufferedReader bufferedReader = null;
 
         try {
 
-            f = new File("C:\\Users\\jdomingo\\Downloads\\words.txt");
+            fileToRead = new File(FILE_PATH);
 
-            fr = new FileReader(f);
+            fileReader = new FileReader(fileToRead);
 
-            br = new BufferedReader(fr);
+            bufferedReader = new BufferedReader(fileReader);
 
             String line;
 
-            while ((line = br.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
 
                 words.add(line);
 
             }
-
-        } catch (FileNotFoundException e) {
-
-            e.printStackTrace();
 
         } catch (IOException e) {
 
@@ -111,9 +81,9 @@ public class Morse {
 
             try {
 
-                if (null != fr) {
+                if (null != fileReader) {
 
-                    fr.close();
+                    fileReader.close();
 
                 }
 
@@ -131,7 +101,7 @@ public class Morse {
 
     public String translateAsciiToMorse(String ascii) {
 
-        return map.getOrDefault(ascii, "");
+        return map.getOrDefault(ascii, EMPTY_STRING);
 
     }
 
@@ -157,17 +127,17 @@ public class Morse {
 
         List<String> wordsCleaned = new ArrayList<>();
 
-        String remaining = "";
+        String remaining;
 
-        for (String w : words) {
+        for (String word : words) {
 
-            String translated = encodedMorse(w);
+            String translated = encodedMorse(word);
 
             if (wordFile.startsWith(translated)) {
 
-                remaining = wordFile.replaceFirst(translated, "");
+                remaining = wordFile.replaceFirst(translated, EMPTY_STRING);
 
-                wordsCleaned.addAll(combine(out + " " + w, remaining));
+                wordsCleaned.addAll(combine(out + " " + word, remaining));
 
             }
 

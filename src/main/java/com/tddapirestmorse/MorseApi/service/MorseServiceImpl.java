@@ -24,9 +24,7 @@ public class MorseServiceImpl implements IMorseService {
 
         String out = "";
 
-        List<String> result = morse.searchWord(input, out);
-
-        return morse.filterResultWords(result);
+        return morse.searchWord(input, out);
 
     }
 
