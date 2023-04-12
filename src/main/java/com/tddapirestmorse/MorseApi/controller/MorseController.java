@@ -12,20 +12,24 @@ import java.util.List;
 @RestController
 public class MorseController {
 
+    private final static String ENG_TO_MORSE_ROUTE="/englishToMorseCode/{input}";
+    private final static String MORSE_TO_ENG_ROUTE="/morseCodeToEnglish/{input}";
+    private final static String VALUE="input";
+
     @Autowired
     IMorseService service;
 
     @CrossOrigin
-    @GetMapping(value = "/englishToMorseCode/{input}")
-    public String getEnglishToMorseCode(@PathVariable(value = "input") String input) {
+    @GetMapping(value = ENG_TO_MORSE_ROUTE)
+    public String getEnglishToMorseCode(@PathVariable(value = VALUE) String input) {
 
         return service.getEnglishToMorseCode(input);
 
     }
 
     @CrossOrigin
-    @GetMapping(value = "/morseCodeToEnglish/{input}")
-    public List<String> getMorseCodeToEnglish(@PathVariable(value = "input") String input) {
+    @GetMapping(value = MORSE_TO_ENG_ROUTE)
+    public List<String> getMorseCodeToEnglish(@PathVariable(value = VALUE) String input) {
 
         return service.getMorseCodeToEnglish(input);
 
